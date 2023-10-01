@@ -1,0 +1,116 @@
+/** FIRST PROBLEM
+  * desc: Generate a histogram detailing the frequencies of the random numbers that fall within a certain range
+  * 	  Bins denoted with  1) center value,  2) frequency. bins are equidistant (mean +/- x*stdDev) and equal in width (range)
+  * notes: The canvas instructions mention rounding into the nearest bin, however she said that if the widths of the bins dont  
+  * 	   touch the other bins, a number generated in between the bins will be discarded. so presumably that means if the value 
+  * 	   is not exactly the center but is within the width, it is counted towards the bin of the centerred value.
+  * in: mean
+  *	stdDev
+  *	numBins
+  *	numSamples
+  *	binWidth (no bigger than stdDev)
+  * defaults: numSamples : 20000
+  * 	      binWidth : 1 (catch all numbers)
+  * out: a collection of elements, each containing a designation (binNum) and a frequency
+  */
+
+
+/** PSEUDO CODE
+
+/* Retrive User inputs:
+ * double mean
+ * double stdDev
+ * int numBins
+ * int numSamples
+ * int/double binWidth
+ */
+//declare fields
+double mean
+double stdDev
+int numBins
+int numSamples
+double binWidth
+
+//recieve input
+cout "Provide a Mean"
+cin to mean
+cout "Provide a Standard Deviation"
+cin to stdDev
+cout "Provide a Number of Bins"
+cin to numBins
+cout "Provide a Number of Samples. Enter -1 for default: 20,000 Samples"
+cin to numSamples
+if numSamples == -1
+    numSamples = 20000
+cout "Provide a Bin Width. Enter -1 for default: a standard deviation. Bin Widths over 1 standard deviation overlap, and will thus be set to default"
+cin to binWidth
+if binWidth equal to -1 or greater than stdDev
+    binWidth = stdDev
+
+/* Generate numbers into a historgram that follow normal distribution (using mean and stdDev) */
+//declare histogram as a vector of pairs(bin center, frequency) of size numBin
+vector<Pair(double binCenter, int freq)> histo(numBin)
+//initialize pairs in histogram
+//start from center (mean) to end
+for from i is numBins/2 and j is 0 to i less than numBins 1 i and j at a time
+    histo at i binCenter = mean + j*stdDev
+    histo at i freq = 0
+//start from left of center to beginning
+for from i is (numBins/2 -1) and j is -1 to i is less than or equal to 0 1 less i and j at a time
+    histo at i binCenter = mean + j*stdDev
+    histo at i freq = 0
+
+//declare random number engine
+random_device rando{}
+mt19937 engine{rando()}
+//declare distribution
+normal_distrribution<double> distr{mean, stdDev}
+//declare a temp variables before loop
+//to store random number
+//the nearest bin to random number
+double randNum
+double nearBin
+
+/* Helper Function: roundToBin(num) */
+double roundToBin(double num){
+    //declarations
+    double prevBin = histo at 0 binCenter //bin at left
+    double nextBin
+    //iterate through bins
+    for from 1 to numBins
+        nextBin = histo at i binCenter //bin at right
+        if num less than nextBin
+            //check which of the two bins
+            if nextBin - num less than equal to num - prevBin
+                return nextBin
+            else
+                return prevBin
+        prevBin = nextBin
+}
+
+//loop numSample times
+for from 0 to numSamples 1 at a time
+    //generate a random number
+    randNum = distr(engine)
+
+    //if number is within bin width of the nearest bin
+    //nearest bin center
+    nearBin = roundToBin(randNum)
+    //if number is within the upperbound of the lower bin
+    if randNum less than or equal to nearBin + half of binWidth
+        //increment frequency of that bin
+        auto tempBin = find_if from beginning of the histo to the end of the histo of pairs p
+            return the pair p in which the first element of pair p is equal to nearBin
+        //add to the bin frequency
+        tempBin frequency ++
+    //if number is within the lowerbound of the upper bin
+    else if randNum greater than or equal to nearBin - half of binWidth
+        //increment frequency of that bin
+        auto tempBin = find_if from beginning of the histo to the end of the histo of pairs p
+            return the pair p in which the first element of pair p is equal to nearBin
+        //add to the bin frequency
+        tempBin frequency ++
+    //otherwise, ignore the random number because it does not land within the widths of the nearest bin
+//end loop
+
+*/
