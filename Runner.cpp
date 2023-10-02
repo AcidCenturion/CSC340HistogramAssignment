@@ -3,6 +3,31 @@
 #include <random>
 #include <algorithm>
 
+/* Helper Function: roundToBin(num) */
+double roundToBin(std::vector<std::pair<double, int>> histo, double num){
+    //declarations
+    double prevBin = histo.at(0).first; //bin at left
+    double nextBin;
+    //iterate through bins
+    for(int i = 1; i < histo.size(); i++){
+        nextBin = histo.at(i).first; //bin at right
+        //num is between two bins
+        if(num < nextBin){
+            //check which of the two bins
+            if(nextBin - num <= num - prevBin){ //close to nextBin
+                return nextBin;
+            }
+            else{ //closer to prevBin
+                return prevBin;
+            }
+        }
+        prevBin = nextBin;
+    }
+    //finished loop but the number was bigger than the last bin
+    return histo.at(histo.size()).first;
+}
+
+
 /** FIRST PROBLEM
   * desc: Generate a histogram detailing the frequencies of the random numbers that fall within a certain range
   * 	  Bins denoted with  1) center value,  2) frequency. bins are equidistant (mean +/- x*stdDev) and equal in width (range)
@@ -102,33 +127,17 @@ std::vector<std::pair<double, int>> normalDistribution(double mean, double stdDe
     return histo;
 }
 
-
-
-
 /** MAIN METHOD */
 int main(){
-    normalDistribution(5, 5, 9, 25, 5);
-    return 0;
-}
+    std::vector<std::pair<double, int>> fin = normalDistribution(5, 5, 9, 25, 5);
 
-/* Helper Function: roundToBin(num) */
-double roundToBin(std::vector<std::pair<double, int>> histo, double num){
-    //declarations
-    double prevBin = histo.at(0).first; //bin at left
-    double nextBin;
-    //iterate through bins
-    for(int i = 1; i < histo.size(); i++){
-        nextBin = histo.at(i).first; //bin at right
-        //num is between two bins
-        if(num < nextBin){
-            //check which of the two bins
-            if(nextBin - num <= num - prevBin){ //close to nextBin
-                return nextBin;
-            }
-            else{ //closer to prevBin
-                return prevBin;
-            }
+    for(int i = 0; i < fin.size(); i++){
+        std::cout << fin.at(i).first << ": ";
+        for(int j = 0; j < fin.at(i).second; j++){
+            std::cout << "*";
         }
-        prevBin = nextBin;
+        std::cout << std::endl;
     }
+    
+    return 0;
 }
