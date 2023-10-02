@@ -5,45 +5,26 @@
   * 	   touch the other bins, a number generated in between the bins will be discarded. so presumably that means if the value 
   * 	   is not exactly the center but is within the width, it is counted towards the bin of the centerred value.
   * in: mean
-  *	stdDev
-  *	numBins
-  *	numSamples
-  *	binWidth (no bigger than stdDev)
-  * defaults: numSamples : 20000
+  *	    stdDev
+  *	    numBins (no less than 9)
+  *	    numSamples
+  *	    binWidth (no bigger than stdDev)
+  * defaults: numBins : 9
+  *           numSamples : 20000
   * 	      binWidth : 1 (catch all numbers)
   * out: a collection of elements, each containing a designation (binNum) and a frequency
   */
 
+/* Prototype */
+std::vector<std::pair<double, int>> normalDistribution(double mean, double stdDev, int numBins, int numSamples, double binWidth){}
 
 /** PSEUDO CODE
 
-/* Retrive User inputs:
- * double mean
- * double stdDev
- * int numBins
- * int numSamples
- * int/double binWidth
- */
-//declare fields
-double mean
-double stdDev
-int numBins
-int numSamples
-double binWidth
-
-//recieve input
-cout "Provide a Mean"
-cin to mean
-cout "Provide a Standard Deviation"
-cin to stdDev
-cout "Provide a Number of Bins"
-cin to numBins
-cout "Provide a Number of Samples. Enter -1 for default: 20,000 Samples"
-cin to numSamples
+//check for defaults
+if numBins < 9
+    numBins = 9
 if numSamples == -1
     numSamples = 20000
-cout "Provide a Bin Width. Enter -1 for default: a standard deviation. Bin Widths over 1 standard deviation overlap, and will thus be set to default"
-cin to binWidth
 if binWidth equal to -1 or greater than stdDev
     binWidth = stdDev
 
@@ -113,4 +94,47 @@ for from 0 to numSamples 1 at a time
     //otherwise, ignore the random number because it does not land within the widths of the nearest bin
 //end loop
 
-*/
+END  OF PSUEDO CODE */
+
+
+
+/** THIRD PROBLEM
+  * desc: Given a list of students who have not found a group, place them in a group or create a new one if there are no groups availble
+  *       All students in the same group must be enrolled in the same section
+  *       Groups can have no more than 3 members
+  * note: Students have Name, Section
+  * in: vector(list) of pairs(student)
+  * out: pass by pointer vector(list) of vector(groups) of pairs(student)
+  */
+
+/* Prototype */
+void groupAssign(vector<vector<pair<int, int>>> &currList, vector<pair<int, int>> newList){}
+
+/** PSUEDO CODE
+
+//for each student in newList
+for from the first element in newList to the last element 1 at a time
+
+    //at each group in currList or until a group is found
+    assigned = false
+    for from the first element in currList to the last element or a group is found 1 at a time
+
+        //check that the group is not full
+        if the vector at i has less than 3 pairs
+            //then check if a person from the group has a matching section
+            if pair section is equal to the current pair section from newList
+                //add the element to the group in currList
+                currList at j push_back(newList at i)
+                assigned = true
+            //if not then this group is the wrong section; ignore this group
+        //if not then the group is full; move on to next group
+
+    //if assigned is still false by the time it reaches the last group, then a new group must be created
+    if not assigned
+        //create the group
+        vector<pair<int, int>> newGroup(0)
+        //add the student to the new group
+        newGroup push_back newList at i
+        currList push_back newGroup
+
+END OF PSEUDO CODE*/
