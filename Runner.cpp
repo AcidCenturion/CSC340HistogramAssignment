@@ -33,7 +33,7 @@ double roundToBin(std::vector<std::pair<double, int>> histo, double num){
         prevBin = nextBin;
     }
     //finished loop but the number was bigger than the last bin
-    return histo.at(histo.size()).first;
+    return histo.at(histo.size()-1).first;
 }
 
 
@@ -243,7 +243,7 @@ void groupAssign(std::vector<std::vector<std::pair<std::string, int>>> &currList
         //at each group in currList or until a group is found
         //initialize assigned status
         assigned = false;
-        for(j = 0; j < currList.size() || !assigned; j++){
+        for(j = 0; j < currList.size() && !assigned; j++){
             //check that the group is not full
             //and check if a person from the group has a matching section
             if(currList.at(j).size() < 3
@@ -324,13 +324,13 @@ int main(){
     std::pair<std::string, int> student;
     //group 1
     student.first = "Phong";
-    student.second = 1;
+    student.second = 3;
     myGroup.push_back(student);
     student.first = "Rathang";
-    student.second = 1;
+    student.second = 3;
     myGroup.push_back(student);
     student.first = "Michael";
-    student.second = 1;
+    student.second = 3;
     myGroup.push_back(student);
     myList.push_back(myGroup);
     myGroup.clear();
