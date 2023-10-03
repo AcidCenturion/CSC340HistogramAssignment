@@ -79,18 +79,100 @@ for from 0 to numSamples 1 at a time
     nearBin = roundToBin(randNum)
     //if number is within the upperbound of the lower bin
     if randNum less than or equal to nearBin + half of binWidth
-        //increment frequency of that bin
-        auto tempBin = find_if from beginning of the histo to the end of the histo of pairs p
-            return the pair p in which the first element of pair p is equal to nearBin
-        //add to the bin frequency
-        tempBin frequency ++
+        //look for the bin
+        for from 0 to numBins 1 at a time
+            if binCenter for the pair at the current index of the histogram is the nearest bin
+                //after the bin has been found
+                //increment frequency of that bin
+                increment frequency of pair at current index of histo
     //if number is within the lowerbound of the upper bin
     else if randNum greater than or equal to nearBin - half of binWidth
-        //increment frequency of that bin
-        auto tempBin = find_if from beginning of the histo to the end of the histo of pairs p
-            return the pair p in which the first element of pair p is equal to nearBin
-        //add to the bin frequency
-        tempBin frequency ++
+        //look for the bin
+        for from 0 to numBins 1 at a time
+            if binCenter for the pair at the current index of the histogram is the nearest bin
+                //after the bin has been found
+                //increment frequency of that bin
+                increment frequency of pair at current index of histo
+    //otherwise, ignore the random number because it does not land within the widths of the nearest bin
+//end loop
+
+END  OF PSUEDO CODE */
+
+
+
+/** SECOND PROBLEM
+  * desc: create and return a histogram of random numbers in a uniform distribution given a range, number of bins, number of samples, and catching range of bins
+  * note: distance between bins are (upper-lower)/numBins
+  * in: lower
+  *	    upper
+  *	    numBins (no less than 21)
+  *	    numSamples
+  *	    binWidth (max is the distance between bins)
+  * defaults: numBins : 21
+  *           numSamples : 20000
+  * 	      binWidth : (upper-lower)/numBins
+  * out: a collection of elements, each containing a designation (binNum) and a frequency
+  */
+
+/* Prototype */
+std::vector<std::pair<double, int>> uniformDistribution(double lower, double upper, int numBins, int numSamples, double binWidth){}
+
+/** PSEUDO CODE
+
+//set defaults
+if numBins < 21
+    numBins = 21
+if numSamples == -1
+    numSamples = 20000
+if binWidth = -1 || binWidth > (upper-lower)/numBins
+    binWidth = (upper-lower)/numBins
+
+//generate empty histogram given the bounds
+//declare histogram
+vector<pair<double, int>> histo
+histo size numBins
+//iniitalize the pairs in histo
+for from 0 to numBins 1 at a time
+    histo at i binCenter = i * ((upper-lower)/numBins)
+    histo at i frequency = 0
+
+//declare random number engine
+random_device rando{}
+mt19937 engine{rando()}
+//declare distribution
+uniform_distribution<double> distr{lower, upper}
+//declare a temp variables before loop
+//to store random number
+//the nearest bin to random number
+double randNum
+double nearBin
+
+//generate a sample numSample times
+for from 0 to numSamples 1 at a time
+    //generate a random number
+    randNum = distr(engine);
+
+    //find the nearest bin center
+    nearBin = roundToBin(histo, randNum);
+
+    //if number is within the upperbound of the lower bin
+    if randNum less than or equal to nearBin + half of binWidth
+        //look for the bin
+        for from 0 to numBins 1 at a time
+            if binCenter for the pair at the current index of the histogram is the nearest bin
+                //after the bin has been found
+                //increment frequency of that bin
+                increment frequency of pair at current index of histo
+
+    //if number is within the lowerbound of the upper bin
+    else if randNum greater than or equal to nearBin - half of binWidth
+        //look for the bin
+        for from 0 to numBins 1 at a time
+            if binCenter for the pair at the current index of the histogram is the nearest bin
+                //after the bin has been found
+                //increment frequency of that bin
+                increment frequency of pair at current index of histo
+
     //otherwise, ignore the random number because it does not land within the widths of the nearest bin
 //end loop
 
@@ -108,7 +190,7 @@ END  OF PSUEDO CODE */
   */
 
 /* Prototype */
-void groupAssign(vector<vector<pair<int, int>>> &currList, vector<pair<int, int>> newList){}
+void groupAssign(vector<vector<pair<string, int>>> &currList, vector<pair<string, int>> newList){}
 
 /** PSUEDO CODE
 
