@@ -12,6 +12,13 @@
 #include <random>
 #include <algorithm>
 
+/* PROTOTYPES */
+std::vector<std::pair<double, int>> normalDistribution(double mean, double stdDev, int numBins, int numSamples, double binWidth);
+
+std::vector<std::pair<double, int>> uniformDistribution(double lower, double upper, int numBins, int numSamples, double binWidth);
+
+void groupAssign(std::vector<std::vector<std::pair<std::string, int>>> &currList, std::vector<std::pair<std::string, int>> newList);
+
 /* Helper Function: roundToBin(num) */
 double roundToBin(std::vector<std::pair<double, int>> histo, double num){
     //declarations
@@ -150,6 +157,7 @@ std::vector<std::pair<double, int>> normalDistribution(double mean, double stdDe
   * 	      binWidth : (upper-lower)/numBins
   * out: a collection of elements, each containing a designation (binNum) and a frequency
   */
+
 std::vector<std::pair<double, int>> uniformDistribution(double lower, double upper, int numBins, int numSamples, double binWidth){
     int i;
     int j;
@@ -275,10 +283,7 @@ void groupAssign(std::vector<std::vector<std::pair<std::string, int>>> &currList
 void normDistTest(double mean, double stdDev, int numBins, int numSamples, double binWidth){
     std::vector<std::pair<double, int>> fin = normalDistribution(mean, stdDev, numBins, numSamples, binWidth);
     for(int i = 0; i < fin.size(); i++){
-        std::cout << fin.at(i).first << ": ";
-        for(int j = 0; j < fin.at(i).second; j++){
-            std::cout << "*";
-        }
+        std::cout << "Bin Center: " << fin.at(i).first << ": " << fin.at(i).second;
         std::cout << std::endl;
     }
 }
@@ -288,10 +293,7 @@ void normDistTest(double mean, double stdDev, int numBins, int numSamples, doubl
 void unifDistTest(double a, double b, int numBins, int numSamples, double binWidth){
     std::vector<std::pair<double, int>> fin = uniformDistribution(a, b, numBins, numSamples, binWidth);
     for(int i = 0; i < fin.size(); i++){
-        std::cout << fin.at(i).first << ": ";
-        for(int j = 0; j < fin.at(i).second; j++){
-            std::cout << "*";
-        }
+        std::cout << "Bin Center: " << fin.at(i).first << ": " << fin.at(i).second;
         std::cout << std::endl;
     }
 }
@@ -305,7 +307,7 @@ void groupAssignTest(std::vector<std::vector<std::pair<std::string, int>>> curre
         for(int j = 0; j < current.at(i).size(); j++){
             std::cout << current.at(i).at(j).first << " | ";
         }
-        std::cout << "Section " << current.at(i).at(0).second << std::endl;
+        std::cout << "Section " << current.at(i).at(0).second << " | Size: " << current.at(i).size() << std::endl;
     }
 }
 
@@ -313,41 +315,139 @@ void groupAssignTest(std::vector<std::vector<std::pair<std::string, int>>> curre
 /** MAIN METHOD */
 int main(){
 
-    normDistTest(5, 5, 9, 30, -1);
+    normDistTest(2, 2, 9, 3000, -1);
     std::cout << std::endl;
 
-    unifDistTest(1, 10, 10, 30, -1);
+    unifDistTest(-2.1, 3.5, 10, 1000, -1);
     std::cout << std::endl;
 
     std::vector<std::vector<std::pair<std::string, int>>> myList;
     std::vector<std::pair<std::string, int>> myGroup;
     std::pair<std::string, int> student;
     //group 1
-    student.first = "Phong";
-    student.second = 3;
+    student.first = "a";
+    student.second = 1;
     myGroup.push_back(student);
-    student.first = "Rathang";
-    student.second = 3;
+    student.first = "b";
+    student.second = 1;
     myGroup.push_back(student);
-    student.first = "Michael";
-    student.second = 3;
+    student.first = "c";
+    student.second = 1;
     myGroup.push_back(student);
     myList.push_back(myGroup);
     myGroup.clear();
     //group 2
-    student.first = "abc";
+    student.first = "a";
+    student.second = 1;
+    myGroup.push_back(student);
+    student.first = "b";
+    student.second = 1;
+    myGroup.push_back(student);
+    myList.push_back(myGroup);
+    myGroup.clear();
+    //group 3
+    student.first = "a";
+    student.second = 1;
+    myGroup.push_back(student);
+    student.first = "b";
+    student.second = 1;
+    myGroup.push_back(student);
+    student.first = "c";
+    student.second = 1;
+    myGroup.push_back(student);
+    myList.push_back(myGroup);
+    myGroup.clear();
+    //group 4
+    student.first = "a";
+    student.second = 1;
+    myGroup.push_back(student);
+    student.first = "b";
+    student.second = 1;
+    myGroup.push_back(student);
+    student.first = "c";
+    student.second = 1;
+    myGroup.push_back(student);
+    myList.push_back(myGroup);
+    myGroup.clear();
+    //group 5
+    student.first = "a";
+    student.second = 1;
+    myGroup.push_back(student);
+    student.first = "b";
+    student.second = 1;
+    myGroup.push_back(student);
+    myList.push_back(myGroup);
+    myGroup.clear();
+    
+    //group 1
+    student.first = "a";
     student.second = 2;
     myGroup.push_back(student);
-    student.first = "def";
+    student.first = "b";
     student.second = 2;
     myGroup.push_back(student);
     myList.push_back(myGroup);
     myGroup.clear();
-    //new group
-    student.first = "zyx";
-    student.second = 3;
+    //group 2
+    student.first = "a";
+    student.second = 2;
     myGroup.push_back(student);
-    student.first = "wvu";
+    student.first = "b";
+    student.second = 2;
+    myGroup.push_back(student);
+    student.first = "c";
+    student.second = 2;
+    myGroup.push_back(student);
+    myList.push_back(myGroup);
+    myGroup.clear();
+    //group 3
+    student.first = "a";
+    student.second = 2;
+    myGroup.push_back(student);
+    student.first = "b";
+    student.second = 2;
+    myGroup.push_back(student);
+    student.first = "c";
+    student.second = 2;
+    myGroup.push_back(student);
+    myList.push_back(myGroup);
+    myGroup.clear();
+    //group 4
+    student.first = "a";
+    student.second = 2;
+    myGroup.push_back(student);
+    student.first = "b";
+    student.second = 2;
+    myGroup.push_back(student);
+    student.first = "c";
+    student.second = 2;
+    myGroup.push_back(student);
+    myList.push_back(myGroup);
+    myGroup.clear();
+    //group 5
+    student.first = "a";
+    student.second = 2;
+    myGroup.push_back(student);
+    student.first = "b";
+    student.second = 2;
+    myGroup.push_back(student);
+    myList.push_back(myGroup);
+    myGroup.clear();
+    
+    //new group
+    student.first = "s1";
+    student.second = 1;
+    myGroup.push_back(student);
+    student.first = "s2";
+    student.second = 1;
+    myGroup.push_back(student);
+    student.first = "s3";
+    student.second = 2;
+    myGroup.push_back(student);
+    student.first = "s4";
+    student.second = 2;
+    myGroup.push_back(student);
+    student.first = "s5";
     student.second = 2;
     myGroup.push_back(student);
 
